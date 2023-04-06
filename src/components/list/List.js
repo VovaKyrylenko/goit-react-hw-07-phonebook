@@ -15,7 +15,7 @@ function FriendList({ contacts, filter }) {
   return (
     <>
       <Span>Your contacts:</Span>
-      {contacts.length === 0 ? (
+      {friendItems.length === 0 ? (
         <p>Nothing here</p>
       ) : (
         <FriendListContainer>{friendItems}</FriendListContainer>
