@@ -17,8 +17,7 @@ function FriendItem({ friend }) {
         onClick={async event => {
           await deleteContact(event.currentTarget.id);
         }}
-        id={friend.id}
-      >
+        id={friend.id}>
         <FiTrash2 />
       </DeleteButton>
     </FriendListItem>
