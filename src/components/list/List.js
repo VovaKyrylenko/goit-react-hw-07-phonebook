@@ -1,6 +1,6 @@
 import React from 'react';
 import { FriendListContainer, Span } from './List.styled';
-import FriendItem from 'components/listItem/ListItem';
+import FriendItem from 'components/ListItem/ListItem';
 
 function FriendList({ contacts, filter }) {
   const filteredContacts = filter
