@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import FormComponent from './form/Form';
 import * as Yup from 'yup';
 import FriendList from './list/List';
 import SearchBar from './finder/SearchBar';
 import { Container } from './form/Form.styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from 'redux/apiSlice';
+import { addContact, fetchContacts } from 'redux/apiSlice';
+import { Span } from './list/List.styled';
 import {
   selectError,
   selectFilterdContacts,
@@ -30,6 +31,9 @@ const App = () => {
   const contacts = useSelector(selectFilterdContacts);
   const error = useSelector(selectError);
   const isLoading = useSelector(selectLoading);
+  useEffect(() => {
+    dispatch(fetchContacts()); // eslint-disable-next-line
+  }, []);
 
   const handleFormSubmit = (values, { resetForm }) => {
     if (contacts.some(contact => contact.name === values.name)) {
@@ -51,6 +55,8 @@ const App = () => {
       <h2 style={{ marginTop: '3rem', marginBottom: '0px' }}>Contacts</h2>
       <SearchBar setFilter={setFilter} filter={filter} />
       {error ?? <p>{error}</p>}
+
+      <Span>Your contacts:</Span>
       {isLoading ? (
         <p>Loading...</p>
       ) : (

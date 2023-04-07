@@ -1,5 +1,5 @@
 import React from 'react';
-import { FriendListContainer, Span } from './List.styled';
+import { FriendListContainer } from './List.styled';
 import FriendItem from 'components/ListItem/ListItem';
 
 function FriendList({ contacts, filter }) {
@@ -14,7 +14,6 @@ function FriendList({ contacts, filter }) {
   ));
   return (
     <>
-      <Span>Your contacts:</Span>
       {friendItems.length === 0 ? (
         <p>Nothing here</p>
       ) : (
