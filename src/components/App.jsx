@@ -4,7 +4,13 @@ import * as Yup from 'yup';
 import FriendList from './list/List';
 import SearchBar from './finder/SearchBar';
 import { Container } from './form/Form.styled';
-import { useAddContactMutation, useGetContactsQuery } from 'redux/mockAPI';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact } from 'redux/apiSlice';
+import {
+  selectError,
+  selectFilterdContacts,
+  selectLoading,
+} from 'selectors/selectors';
 
 const initialValues = {
   name: '',
@@ -19,15 +25,17 @@ const FormSchema = Yup.object().shape({
 });
 
 const App = () => {
+  const dispatch = useDispatch();
   const [filter, setFilter] = useState('');
-  const { data: contacts, isFetching, isError } = useGetContactsQuery();
-  const [addContact] = useAddContactMutation();
+  const contacts = useSelector(selectFilterdContacts);
+  const error = useSelector(selectError);
+  const isLoading = useSelector(selectLoading);
 
   const handleFormSubmit = (values, { resetForm }) => {
     if (contacts.some(contact => contact.name === values.name)) {
       alert(`${values.name} is already in your contacts`);
     } else {
-      addContact(values);
+      dispatch(addContact(values));
       resetForm();
     }
   };
@@ -42,8 +50,8 @@ const App = () => {
       />
       <h2 style={{ marginTop: '3rem', marginBottom: '0px' }}>Contacts</h2>
       <SearchBar setFilter={setFilter} filter={filter} />
-      {isError && <p>Error...</p>}
-      {isFetching ? (
+      {error ?? <p>{error}</p>}
+      {isLoading ? (
         <p>Loading...</p>
       ) : (
         <FriendList contacts={contacts} filter={filter} />

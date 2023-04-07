@@ -6,18 +6,20 @@ import {
   DeleteButton,
 } from 'components/list/List.styled';
 import React from 'react';
-import { useDeleteContactMutation } from 'redux/mockAPI';
+import { useDispatch } from 'react-redux';
+import { deleteContact } from 'redux/apiSlice';
 function FriendItem({ friend }) {
-  const [deleteContact] = useDeleteContactMutation();
+  const dispatch = useDispatch();
   return (
     <FriendListItem>
       <Name>{friend.name}</Name>
       <PhoneNumber>{friend.phoneNumber}</PhoneNumber>
       <DeleteButton
-        onClick={async event => {
-          await deleteContact(event.currentTarget.id);
+        onClick={event => {
+          dispatch(deleteContact(event.currentTarget.id));
         }}
-        id={friend.id}>
+        id={friend.id}
+      >
         <FiTrash2 />
       </DeleteButton>
     </FriendListItem>
